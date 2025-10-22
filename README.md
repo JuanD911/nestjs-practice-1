@@ -57,6 +57,104 @@ src/
     │
     └── swapi.module.ts             # Módulo central que agrupa los recursos
 ```
+---
+
+## Cómo se consumió la API de SWAPI
+
+La API de SWAPI se consumió mediante un **adaptador personalizado con Axios**, que centraliza todas las solicitudes HTTP en un solo punto.
+
+```ts
+//src/api/api.service.ts
+
+import { Injectable, HttpException } from '@nestjs/common';
+import axios, { AxiosInstance } from 'axios';
+
+@Injectable()
+export class ApiService {
+  private readonly axios: AxiosInstance;
+
+  constructor() {
+    this.axios = axios.create({
+      baseURL: 'https://www.swapi.tech/api',
+      timeout: 10000,
+    });
+  }
+
+  async get<T>(url: string): Promise<T> {
+    try {
+      const { data } = await this.axios.get<T>(url);
+      return data;
+    } catch (error) {
+      throw new HttpException(
+        `Error fetching data from API: ${error.message}`,
+        error.response?.status || 500,
+      );
+    }
+  }
+}
+
+```
+El servicio ApiService centraliza la comunicación con la API de SWAPI utilizando Axios.
+Dentro del constructor se crea una instancia configurada con un baseURL https://www.swapi.tech/api)
+El método genérico get<T> se encarga de realizar peticiones HTTP GET y devolver los datos tipados según el tipo T.
+Además, implementa manejo de errores mediante un bloque try...catch: si la solicitud falla, lanza una HttpException personalizada con el mensaje de error y el código de estado devuelto por la API (o 500 por defecto).
+
+---
+
+## Implementación de la paginación
+
+La paginación se implementó tanto en los datos obtenidos de la API como en los registros locales simulados.
+
+### En la API real
+
+La API de SWAPI utiliza parámetros `page` y `limit`. En este proyecto se adaptó para aceptar `offset` desde el cliente y convertirlo internamente a `page`:
+
+```
+page = offset / limit + 1
+
+```
+
+### En los datos locales
+
+Se utiliza el método `.slice()` de JavaScript para devolver los elementos según los parámetros enviados:
+
+```ts
+ async findAllLocal(page = 1, limit= 5){
+      const offset = (page - 1) * limit;
+      const start = offset;
+      const end = offset + limit;
+
+      const results = this.local.slice(start, end);
+
+      return {
+          total: this.local.length,
+          limit,
+          offset,
+          data: results,
+      };
+    }
+```
+El método findAllLocal implementa una paginación manual sobre un arreglo local (this.local) para simular el comportamiento de una base de datos o API real. Recibe dos parámetros: page, que indica el número de página, y limit, que define cuántos registros mostrar por página. A partir de ellos calcula el desplazamiento (offset = (page - 1) * limit) y determina el rango de elementos a devolver usando slice(start, end). De esta forma, obtiene solo la porción del arreglo correspondiente a la página solicitada.
+
+---
+
+## Manejo de errores
+
+El proyecto implementa control de errores en los servicios mediante `try...catch` y excepciones personalizadas de NestJS (`NotFoundException`).
+
+Ejemplo para solicitudes HTTP externas:
+
+```ts
+//swapi/people/people.service.ts
+try{
+  const response = await this.api.get<SwapiPersonResponse>(
+    `${this.basePath}/${id}`
+  )
+  return response.result.properties;
+  } catch {
+  throw new NotFoundException(`Person with id ${id} not found`);
+  }
+```
 
 ---
 
