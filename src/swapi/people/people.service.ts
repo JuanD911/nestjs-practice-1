@@ -56,7 +56,8 @@ export class PeopleService {
         }
     }
 
-    async findAllLocal(limit = 5, offset = 0){
+    async findAllLocal(page = 1, limit= 5){
+        const offset = (page - 1) * limit;
         const start = offset;
         const end = offset + limit;
 

@@ -19,8 +19,8 @@ export class PeopleController {
   }
 
   @Get('local/all')
-  getAllLocal(@Query('limit') limit = 5, @Query('offset') offset = 0){
-    return this.peopleService.findAllLocal(Number(limit), Number(offset));
+  getAllLocal(@Query('page') page = 1, @Query('limit') limit = 5){
+    return this.peopleService.findAllLocal(Number(page), Number(limit));
   }
 
   @Get('local/:id')
