@@ -115,14 +115,24 @@ GET http://localhost:3000/people/34
 **Respuesta:**
 ```json
 {
-  "result": {
-    "uid": "34",
-    "properties": {
-      "name": "Finis Valorum",
-      "height": "170",
-      "gender": "male",
-      "homeworld": "https://www.swapi.tech/api/planets/9"
-    }
+  {
+    "created": "2025-10-22T06:59:34.728Z",
+    "edited": "2025-10-22T06:59:34.728Z",
+    "name": "Finis Valorum",
+    "gender": "male",
+    "skin_color": "fair",
+    "hair_color": "blond",
+    "height": "170",
+    "eye_color": "blue",
+    "mass": "unknown",
+    "homeworld": "https://www.swapi.tech/api/planets/9",
+    "birth_year": "91BBY",
+    "vehicles": [],
+    "starships": [],
+    "films": [
+        "https://www.swapi.tech/api/films/4"
+    ],
+    "url": "https://www.swapi.tech/api/people/34"
   }
 }
 ```
@@ -265,7 +275,7 @@ DELETE http://localhost:3000/people/local/401
 ```json
 {
   "message": "Person deleted (simulated)",
-  "deleted": [
+  "person": [
     {
       "id": "401",
       "name": "Sapito Espacial",
