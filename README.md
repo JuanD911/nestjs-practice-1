@@ -66,7 +66,7 @@ src/
 |--------------|------|--------------|
 | **GET** | `/people/all?limit=10&offset=30` | Obtener personajes desde la API real de SWAPI |
 | **GET** | `/people/:id` | Obtener un personaje de SWAPI por su ID |
-| **GET** | `/people/local/all?limit=5&offset=5` | Obtener personajes locales simulados con paginación |
+| **GET** | `/people/local/all?page=1&limit=5` | Obtener personajes locales simulados con paginación |
 | **GET** | `/people/local/:id` | Obtener un personaje local por su ID |
 | **POST** | `/people/create-person` | Crear un nuevo personaje local (simulado) |
 | **PATCH** | `/people/local/update/:id` | Actualizar un personaje local (simulado) |
@@ -143,33 +143,57 @@ GET http://localhost:3000/people/34
 
 **Ruta:**
 ```
-GET http://localhost:3000/people/local/all?limit=5&offset=5
+GET http://localhost:3000/people/local/all?page=1&limit=5
 ```
 
 **Respuesta:**
 ```json
 {
-  "total": 15,
-  "limit": 5,
-  "offset": 5,
-  "data": [
-    {
-      "id": "406",
-      "name": "Lira Thane",
-      "birth_year": "23 BBY",
-      "gender": "female",
-      "height": "165",
-      "homeworld": "Rodia"
-    },
-    {
-      "id": "407",
-      "name": "Galen Voss",
-      "birth_year": "10 ABY",
-      "gender": "male",
-      "height": "178",
-      "homeworld": "Corellia"
-    }
-  ]
+    "total": 15,
+    "limit": 5,
+    "offset": 0,
+    "data": [
+        {
+            "id": "401",
+            "name": "Kara Velorin",
+            "birth_year": "42 BBY",
+            "gender": "female",
+            "height": "168",
+            "homeworld": "Nal Hutta"
+        },
+        {
+            "id": "402",
+            "name": "Darin Solas",
+            "birth_year": "19 ABY",
+            "gender": "male",
+            "height": "183",
+            "homeworld": "Corulag"
+        },
+        {
+            "id": "403",
+            "name": "Ryn Talvos",
+            "birth_year": "55 BBY",
+            "gender": "male",
+            "height": "190",
+            "homeworld": "Ord Mantell"
+        },
+        {
+            "id": "404",
+            "name": "Mira Kaen",
+            "birth_year": "12 ABY",
+            "gender": "female",
+            "height": "160",
+            "homeworld": "Corellia"
+        },
+        {
+            "id": "405",
+            "name": "Tovan Krell",
+            "birth_year": "7 BBY",
+            "gender": "non-binary",
+            "height": "175",
+            "homeworld": "Dantooine"
+        }
+    ]
 }
 ```
 
