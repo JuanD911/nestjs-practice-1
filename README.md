@@ -85,21 +85,18 @@ GET http://localhost:3000/people/all?limit=10&offset=30
 
 **Respuesta:**
 ```json
-{
-  "message": "People from SWAPI",
-  "count": 10,
-  "results": [
-    {
-      "uid": "31",
-      "name": "Nien Nunb",
-      "url": "https://www.swapi.tech/api/people/31"
-    },
+{ 
     {
       "uid": "32",
       "name": "Qui-Gon Jinn",
       "url": "https://www.swapi.tech/api/people/32"
-    }
-  ]
+    },
+    {
+        "uid": "33",
+        "name": "Nute Gunray",
+        "url": "https://www.swapi.tech/api/people/33"
+    },
+    ...
 }
 ```
 
