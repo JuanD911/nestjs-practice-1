@@ -193,7 +193,7 @@ GET http://localhost:3000/people/local/all?page=1&limit=5
             "height": "175",
             "homeworld": "Dantooine"
         }
-    ]
+    ] 
 }
 ```
 
@@ -241,7 +241,7 @@ POST http://localhost:3000/people/create-person
 **Respuesta:**
 ```json
 {
-  "message": "Person created locally (simulated)",
+  "message": "Person Juan Shung created locally",
   "person": {
     "id": "785",
     "name": "Juan Shung",
@@ -274,7 +274,7 @@ PATCH http://localhost:3000/people/local/update/401
 **Respuesta:**
 ```json
 {
-  "message": "Person with ID 401 updated successfully (simulated)",
+  "message": "Person with id 401 successfully updated",
   "updated": {
     "id": "401",
     "name": "Sapito Espacial",
@@ -298,16 +298,15 @@ DELETE http://localhost:3000/people/local/401
 **Respuesta:**
 ```json
 {
-  "message": "Person deleted (simulated)",
-  "person": [
-    {
+  "message": "Person with id 401 successfully deleted",
+  "person": {
       "id": "401",
       "name": "Sapito Espacial",
+      "birth_year": "42 BBY",
       "gender": "female",
       "height": "200",
       "homeworld": "Earth"
     }
-  ]
 }
 ```
 
