@@ -1,98 +1,286 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# NestJS SWAPI CRUD
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este proyecto fue desarrollado como práctica de integración de **NestJS** con **Axios**, consumiendo la [SWAPI API (Star Wars API)](https://www.swapi.tech/) y simulando un **CRUD local** con datos precargados para probar métodos HTTP.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Instalación y ejecución
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
+### 1. Clonar el repositorio
 
 ```bash
-$ npm install
+git clone git@github.com:JuanD911/nestjs-practice-1.git
 ```
 
-## Compile and run the project
+### 2. Instalar dependencias
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+### 3. Ejecutar el proyecto
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run start:dev
 ```
 
-## Deployment
+La aplicación se ejecutará en:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```
+http://localhost:3000
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## Estructura principal del proyecto
 
-Check out a few resources that may come in handy when working with NestJS:
+```
+src/
+│
+├── app.module.ts
+├── main.ts
+│
+├── api/
+│   └── api.module.ts
+|   └── api.service.ts        # Conexión centralizada a la API SWAPI
+│            
+└── swapi/
+    ├── people/
+    │   ├── people.module.ts
+    │   ├── people.controller.ts
+    │   ├── people.service.ts
+    │   ├── dto/
+    │   │   ├── create-person.dto.ts
+    │   │   └── update-person.dto.ts
+    │   └── interfaces/
+    │       └── swapi-person.interface.ts
+    │
+    └── swapi.module.ts             # Módulo central que agrupa los recursos
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+---
 
-## Support
+## Endpoints disponibles
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+| Método HTTP | Ruta | Descripción |
+|--------------|------|--------------|
+| **GET** | `/people/all?limit=10&offset=30` | Obtener personajes desde la API real de SWAPI |
+| **GET** | `/people/:id` | Obtener un personaje de SWAPI por su ID |
+| **GET** | `/people/local/all?limit=5&offset=5` | Obtener personajes locales simulados con paginación |
+| **GET** | `/people/local/:id` | Obtener un personaje local por su ID |
+| **POST** | `/people/create-person` | Crear un nuevo personaje local (simulado) |
+| **PATCH** | `/people/local/update/:id` | Actualizar un personaje local (simulado) |
+| **DELETE** | `/people/local/:id` | Eliminar un personaje local (simulado) |
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Ejemplos de peticiones y respuestas
 
-## License
+### 1. GET ALL — SWAPI (API real)
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+**Ruta:**
+```
+GET http://localhost:3000/people/all?limit=10&offset=30
+```
+
+**Respuesta:**
+```json
+{
+  "message": "People from SWAPI",
+  "count": 10,
+  "results": [
+    {
+      "uid": "31",
+      "name": "Nien Nunb",
+      "url": "https://www.swapi.tech/api/people/31"
+    },
+    {
+      "uid": "32",
+      "name": "Qui-Gon Jinn",
+      "url": "https://www.swapi.tech/api/people/32"
+    }
+  ]
+}
+```
+
+---
+
+### 2. GET BY ID — SWAPI (API real)
+
+**Ruta:**
+```
+GET http://localhost:3000/people/34
+```
+
+**Respuesta:**
+```json
+{
+  "result": {
+    "uid": "34",
+    "properties": {
+      "name": "Finis Valorum",
+      "height": "170",
+      "gender": "male",
+      "homeworld": "https://www.swapi.tech/api/planets/9"
+    }
+  }
+}
+```
+
+---
+
+### 3. GET ALL LOCAL — (Simulado)
+
+**Ruta:**
+```
+GET http://localhost:3000/people/local/all?limit=5&offset=5
+```
+
+**Respuesta:**
+```json
+{
+  "total": 15,
+  "limit": 5,
+  "offset": 5,
+  "data": [
+    {
+      "id": "406",
+      "name": "Lira Thane",
+      "birth_year": "23 BBY",
+      "gender": "female",
+      "height": "165",
+      "homeworld": "Rodia"
+    },
+    {
+      "id": "407",
+      "name": "Galen Voss",
+      "birth_year": "10 ABY",
+      "gender": "male",
+      "height": "178",
+      "homeworld": "Corellia"
+    }
+  ]
+}
+```
+
+---
+
+### 4. GET BY ID LOCAL — (Simulado)
+
+**Ruta:**
+```
+GET http://localhost:3000/people/local/401
+```
+
+**Respuesta:**
+```json
+{
+  "id": "401",
+  "name": "Kara Velorin",
+  "birth_year": "42 BBY",
+  "gender": "female",
+  "height": "168",
+  "homeworld": "Nal Hutta"
+}
+```
+
+---
+
+### 5. POST CREATE PERSON — (Simulado)
+
+**Ruta:**
+```
+POST http://localhost:3000/people/create-person
+```
+
+**Body:**
+```json
+{
+  "name": "Juan Shung",
+  "birthYear": "445 BBY",
+  "gender": "Unknown",
+  "height": "210",
+  "homeworld": "Javin"
+}
+```
+
+**Respuesta:**
+```json
+{
+  "message": "Person created locally (simulated)",
+  "person": {
+    "id": "785",
+    "name": "Juan Shung",
+    "birthYear": "445 BBY",
+    "gender": "Unknown",
+    "height": "210",
+    "homeworld": "Javin"
+  }
+}
+```
+
+---
+
+### 6. PATCH UPDATE PERSON — (Simulado)
+
+**Ruta:**
+```
+PATCH http://localhost:3000/people/local/update/401
+```
+
+**Body:**
+```json
+{
+  "name": "Sapito Espacial",
+  "height": "200",
+  "homeworld": "Earth"
+}
+```
+
+**Respuesta:**
+```json
+{
+  "message": "Person with ID 401 updated successfully (simulated)",
+  "updated": {
+    "id": "401",
+    "name": "Sapito Espacial",
+    "birth_year": "42 BBY",
+    "gender": "female",
+    "height": "200",
+    "homeworld": "Earth"
+  }
+}
+```
+
+---
+
+### 7. DELETE PERSON — (Simulado)
+
+**Ruta:**
+```
+DELETE http://localhost:3000/people/local/401
+```
+
+**Respuesta:**
+```json
+{
+  "message": "Person deleted (simulated)",
+  "deleted": [
+    {
+      "id": "401",
+      "name": "Sapito Espacial",
+      "gender": "female",
+      "height": "200",
+      "homeworld": "Earth"
+    }
+  ]
+}
+```
+
+---
+
+## Autor
+
+**Juan Duarte**  
+_Primer Taller Práctico NestJS — 2025_  
+Desarrollado con [NestJS](https://nestjs.com/) y [SWAPI.tech](https://www.swapi.tech/)
